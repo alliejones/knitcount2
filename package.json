@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lodash": "^3.3.1",
+    "immutable": "^3.6.2",
     "marty": "^0.8.12",
     "react": "^0.12.2",
     "react-hot-loader": "^1.1.5",

@@ -1,4 +1,5 @@
 var Marty = require('marty');
+var Immutable = require('immutable');
 
 var ProjectConstants = require('../constants/Projects');
 
@@ -8,16 +9,16 @@ var ProjectsStore = Marty.createStore({
     createProject: ProjectConstants.CREATE_PROJECT
   },
   getInitialState: function() {
-    return {
-      1: {
-        id: 1,
+    return Immutable.fromJS({
+      '1': {
+        id: '1',
         name: 'Test Project'
       },
-      2: {
-        id: 2,
+      '2': {
+        id: '2',
         name: 'A different test project'
       }
-    };
+    });
   },
 
   getAll: function() {
@@ -25,7 +26,7 @@ var ProjectsStore = Marty.createStore({
   },
 
   getByID: function (id) {
-    return this.state[id];
+    return this.state.get(id);
   },
 
   createProject: function (project) {

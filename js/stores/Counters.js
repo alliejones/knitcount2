@@ -1,5 +1,5 @@
 var Marty = require('marty');
-var _ = require('lodash');
+var Immutable = require('immutable');
 
 var CounterConstants = require('../constants/Counters');
 
@@ -11,29 +11,29 @@ var CountersStore = Marty.createStore({
     decCounter: CounterConstants.DEC_COUNTER
   },
   getInitialState: function() {
-    return {
-      1: {
-        id: 1,
-        projectID: 1,
+    return Immutable.fromJS({
+      '1': {
+        id: '1',
+        projectID: '1',
         name: 'A counter',
         value: 0,
         maxValue: null
       },
-      2: {
-        id: 2,
-        projectID: 1,
+      '2': {
+        id: '2',
+        projectID: '1',
         name: 'Another counter',
         value: 2,
         maxValue: 10
       },
-      3: {
-        id: 3,
-        projectID: 2,
+      '3': {
+        id: '3',
+        projectID: '2',
         name: 'Test counter',
         value: 11,
         maxValue: null
       }
-    };
+    });
   },
 
   getAll: function() {
@@ -41,7 +41,7 @@ var CountersStore = Marty.createStore({
   },
 
   getByProjectID: function (id) {
-    return _.where(this.state, { projectID: +id });
+    return this.state.filter(c => c.get('projectID') === id);
   },
 
   createCounter: function (counter) {
@@ -50,13 +50,11 @@ var CountersStore = Marty.createStore({
   },
 
   incCounter: function (counterID) {
-    this.state[counterID].value += 1;
-    this.hasChanged();
+    this.setState(this.state.updateIn([counterID, 'value'], v => v + 1));
   },
 
   decCounter: function (counterID) {
-    this.state[counterID].value -= 1;
-    this.hasChanged();
+    this.setState(this.state.updateIn([counterID, 'value'], v => v - 1));
   }
 });
 
