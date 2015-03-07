@@ -50,10 +50,16 @@ var CountersStore = Marty.createStore({
   },
 
   incCounter: function (counterID) {
-    this.setState(this.state.updateIn([counterID, 'value'], v => v + 1));
+    var value = this.state.getIn([counterID, 'value']);
+    var maxValue = this.state.getIn([counterID, 'maxValue'], false) || Infinity;
+    if (value < maxValue) {
+      this.setState(this.state.updateIn([counterID, 'value'], v => v + 1));
+    }
   },
 
   decCounter: function (counterID) {
+    var value = this.state.getIn([counterID, 'value']);
+    if (value === 0) return;
     this.setState(this.state.updateIn([counterID, 'value'], v => v - 1));
   }
 });
