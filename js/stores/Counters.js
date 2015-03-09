@@ -45,8 +45,16 @@ var CountersStore = Marty.createStore({
   },
 
   createCounter: function (counter) {
-    this.state[counter.id] = counter;
-    this.hasChanged();
+    counter.id = this._getID();
+    var defaultCounter = new Immutable.Map({
+      id: null,
+      projectID: null,
+      name: null,
+      value: 0,
+      maxValue: null
+    });
+    counter = defaultCounter.merge(Immutable.fromJS(counter));
+    this.setState(this.state.set(counter.get('id'), counter));
   },
 
   incCounter: function (counterID) {
@@ -61,6 +69,10 @@ var CountersStore = Marty.createStore({
     var value = this.state.getIn([counterID, 'value']);
     if (value === 0) return;
     this.setState(this.state.updateIn([counterID, 'value'], v => v - 1));
+  },
+
+  _getID: function() {
+    return (this.state.count() + 1).toString();
   }
 });
 

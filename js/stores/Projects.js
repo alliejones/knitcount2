@@ -30,8 +30,12 @@ var ProjectsStore = Marty.createStore({
   },
 
   createProject: function (project) {
-    this.state[project.id] = project;
-    this.hasChanged();
+    project.id = this._getID();
+    this.setState(this.state.set(project.id, Immutable.fromJS(project)));
+  },
+
+  _getID: function() {
+    return (this.state.count() + 1).toString();
   }
 });
 
