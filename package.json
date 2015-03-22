@@ -1,20 +1,21 @@
 {
   "name": "knitcount2",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --progress --inline --colors --history-api-fallback",
-    "build": "webpack --progress --colors"
+    "build": "webpack --progress"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Allie Jones",
+  "license": "MIT",
+  "private": "true",
   "devDependencies": {
     "immutable": "^3.6.2",
     "marty": "^0.8.12",
-    "react": "^0.12.2",
+    "react": "^0.13.1",
     "react-hot-loader": "^1.1.5",
-    "react-router": "^0.12.4",
+    "react-router": "^0.13.1",
     "webpack": "^1.6.0",
     "webpack-dev-server": "^1.7.0"
   }

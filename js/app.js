@@ -8,7 +8,7 @@ var App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<RouteHandler/>
+				<RouteHandler {...this.props} />
 			</div>
 		);
 	}
@@ -26,6 +26,7 @@ var routes = (
 	</Route>
 );
 
-Router.run(routes, Router.HistoryLocation, function (Handler) {  
-	React.render(<Handler/>, document.getElementById('react'));
+Router.run(routes, Router.HistoryLocation, function (Handler, state) {
+	var params = state.params;
+	React.render(<Handler params={params} />, document.getElementById('react'));
 });
