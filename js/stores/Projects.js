@@ -15,7 +15,7 @@ var ProjectsStore = Marty.createStore({
   },
 
   getAll: function() {
-    return this.state;
+    return this.state.toList();
   },
 
   getByID: function (id) {
@@ -24,7 +24,7 @@ var ProjectsStore = Marty.createStore({
 
   createProject: function (project) {
     project = ProjectSource.createProject(project);
-    this.setState(this.state.set(project.id, Immutable.fromJS(project)));
+    this.setState(this.state.set(project.id, project));
   },
 
   _getID: function() {

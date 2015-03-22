@@ -16,12 +16,10 @@ var App = React.createClass({
 
 var ProjectList = require('./components/ProjectList');
 var ProjectView = require('./components/ProjectView');
-var ProjectCreate = require('./components/ProjectCreate');
 
 var routes = (  
 	<Route name="app" path="/" handler={App}>
 		<DefaultRoute name="projectList" handler={ProjectList} />	
-		<Route name="projectCreate" path="/project/create" handler={ProjectCreate}/>
 		<Route name="project" path="/project/:projectID" handler={ProjectView}/>
 	</Route>
 );

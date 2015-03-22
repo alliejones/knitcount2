@@ -16,16 +16,16 @@ var CountersStore = Marty.createStore({
 	},
 
 	getAll: function() {
-		return this.state;
+		return this.state.toList();
 	},
 
 	getByProjectID: function (id) {
-		return this.state.filter(c => c.get('projectID') === id);
+		return this.state.filter(c => c.projectID === id).toList();
 	},
 
 	createCounter: function (counter) {
 		counter = CounterSource.createCounter(counter);
-		this.setState(this.state.set(counter.get('id'), counter));
+		this.setState(this.state.set(counter.id, counter));
 	},
 
 	incCounter: function (counterID) {
