@@ -3,7 +3,6 @@ var Immutable = require('immutable');
 
 var ProjectConstants = require('../constants/Projects');
 var ProjectSource = require('../sources/Projects');
-var IDsSource = require('../sources/IDs');
 
 var ProjectsStore = Marty.createStore({
   displayName: 'Projects',
@@ -24,8 +23,7 @@ var ProjectsStore = Marty.createStore({
   },
 
   createProject: function (project) {
-    project.id = IDsSource.generateID('projects');
-    ProjectSource.createProject(project);
+    project = ProjectSource.createProject(project);
     this.setState(this.state.set(project.id, Immutable.fromJS(project)));
   },
 

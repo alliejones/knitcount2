@@ -1,10 +1,13 @@
 var Marty = require('marty');
 var Immutable = require('immutable');
 
+var IDsSource = require('../sources/IDs');
+
 var ProjectsStorage = Marty.createStateSource({
 	type: 'localStorage',
 	namespace: 'projects',
 	createProject: function (project) {
+		project.id = IDsSource.generateID('projects');
 		this.set(project.id, JSON.stringify(project));
 	},
 	getAll: function() {
