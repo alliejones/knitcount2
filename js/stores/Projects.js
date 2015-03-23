@@ -27,9 +27,10 @@ var ProjectsStore = Marty.createStore({
     this.setState(this.state.set(project.id, project));
   },
 
-  _getID: function() {
-    return ProjectSource.generateID();
-  }
+  updateProject: function (project) {
+    this.setState(this.state.set(project.id, project));
+    ProjectSource.updateProject(project);
+  },
 });
 
 module.exports = ProjectsStore;

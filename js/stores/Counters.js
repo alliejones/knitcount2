@@ -19,6 +19,10 @@ var CountersStore = Marty.createStore({
 		return this.state.toList();
 	},
 
+	getByID: function(counterID) {
+		return this.state.get(counterID);
+	},
+
 	getByProjectID: function (id) {
 		return this.state.filter(c => c.projectID === id).toList();
 	},
@@ -28,29 +32,28 @@ var CountersStore = Marty.createStore({
 		this.setState(this.state.set(counter.id, counter));
 	},
 
+	updateCounter: function (counter) {
+		this.setState(this.state.set(counter.id, counter));
+		CounterSource.updateCounter(counter);
+	},
+
 	incCounter: function (counterID) {
-		var counter = this.state.get(counterID);
+		var counter = this.getByID(counterID);
 		var value = counter.get('value');
 		var maxValue = counter.get('maxValue', false) || Infinity;
 
 		if (value < maxValue) {
-			var newState = this.state.updateIn([counterID, 'value'], v => v + 1);
-			this.setState(newState);
-			CounterSource.updateCounter(newState.get(counterID));
+			this.updateCounter(counter.set('value', value + 1));	
 		}
 	},
 
 	decCounter: function (counterID) {
-		var value = this.state.getIn([counterID, 'value']);
-		if (value === 0) return;
+		var counter = this.getByID(counterID);
+		var value = counter.get('value');
 
-		var newState = this.state.updateIn([counterID, 'value'], v => v - 1);
-		this.setState(newState);
-		CounterSource.updateCounter(newState.get(counterID));
-	},
-
-	_getID: function() {
-		return (this.state.count() + 1).toString();
+		if (value > 0) {
+			this.updateCounter(counter.set('value', value - 1));
+		}
 	}
 });
 

@@ -6,3 +6,4 @@ This is a rewrite of [knitcount](https://github.com/alliejones/knitcount/) built
 * [React](https://github.com/facebook/react) and [react-router](https://github.com/rackt/react-router)
 * [Immutable.js](https://github.com/facebook/immutable-js/)
 * [Flux](https://github.com/facebook/flux) architecture (courtesy of [Marty.js](https://github.com/jhollingworth/marty))
+* [Jest](https://github.com/facebook/jest)

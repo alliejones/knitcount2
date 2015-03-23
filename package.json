@@ -4,19 +4,35 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --progress --inline --colors --history-api-fallback",
-    "build": "webpack --progress --colors"
+    "serve": "webpack-dev-server --hot --progress --inline --colors --history-api-fallback",
+    "build": "webpack --progress --colors",
+    "test": "jest"
   },
   "author": "Allie Jones",
   "license": "MIT",
   "private": "true",
   "devDependencies": {
+    "babel-jest": "^4.0.0",
     "immutable": "^3.6.2",
+    "jest-cli": "^0.4.0",
     "marty": "^0.8.12",
     "react": "^0.13.1",
     "react-hot-loader": "^1.1.5",
     "react-router": "^0.13.1",
+    "react-tools": "^0.13.1",
     "webpack": "^1.6.0",
     "webpack-dev-server": "^1.7.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": ["es6", "js"],
+    "moduleFileExtensions": ["js", "json", "es6"],
+    "unmockedModulePathPatterns": [
+      "react",
+      "react/addons",
+      "immutable",
+      "marty",
+      "utl"
+    ]
   }
 }

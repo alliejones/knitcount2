@@ -3,13 +3,7 @@ var Immutable = require('immutable');
 
 var IDsSource = require('../sources/IDs');
 
-var Counter = Immutable.Record({
-	id: null,
-	projectID: null,
-	name: null,
-	value: 0,
-	maxValue: null
-});
+var Counter = require('../utl/records').Counter;
 
 var CountersStorage = Marty.createStateSource({
 	type: 'localStorage',

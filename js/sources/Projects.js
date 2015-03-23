@@ -3,20 +3,23 @@ var Immutable = require('immutable');
 
 var IDsSource = require('../sources/IDs');
 
-var Project = Immutable.Record({
-	id: null,
-	name: null
-});
+var Project = require('../utl/records').Project;
 
 var ProjectsStorage = Marty.createStateSource({
 	type: 'localStorage',
 	namespace: 'projects',
+
 	createProject: function (project) {
 		project.id = IDsSource.generateID('projects');
 		project = new Project(project);
 		this.set(project.id, JSON.stringify(project));
 		return project;
 	},
+
+	updateProject: function(project) {
+		this.set(project.id, JSON.stringify(project));
+	},
+
 	getAll: function() {
 		var all = new Immutable.Map();
 		for (var k in localStorage) {
