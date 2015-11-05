@@ -1,27 +1,15 @@
-var Marty = require('marty');
-var React = require('react/addons');
-var Router = require('react-router');
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-var ProjectActions = require('../actions/Projects');
-var ProjectsStore = require('../stores/Projects');
-
-var Link = require('react-router').Link;
-
-var ProjectListState = Marty.createStateMixin({
-	listenTo: [ ProjectsStore ],
-	getState: function () {
-		return {
-			projects: ProjectsStore.getAll()
-		};
-	}
-});
+import { Project } from '../utl/records';
+import { List } from 'immutable';
 
 var ProjectList = React.createClass({
-	mixins: [ ProjectListState ],
 
 	getInitialState: function() {
 		return {
-			showCreateForm: false
+			  showCreateForm: false,
+        projects: new List()
 		};
 	},
 
@@ -30,7 +18,7 @@ var ProjectList = React.createClass({
 			<div>
 				<h1>Projects</h1>
 				{this.state.projects.count() ?
-					this.renderProjectList() : this.renderEmptyMessage()}	
+					this.renderProjectList() : this.renderEmptyMessage()}
 				{this.renderCreateForm()}
 			</div>
 		);
@@ -75,7 +63,7 @@ var ProjectList = React.createClass({
 });
 
 var ProjectCreateForm = React.createClass({
-	mixins: [ React.addons.LinkedStateMixin, Router.Navigation ],
+	mixins: [ LinkedStateMixin ],
 
 	getInitialState: function() {
 		return {
