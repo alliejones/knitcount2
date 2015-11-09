@@ -11,6 +11,9 @@ module.exports = {
       { test: /\.css$/, loader: "style!css" }
     ]
   },
+  resolve: {
+    extensions: [ '', '.js', '.jsx' ]
+  },
   plugins: [
     new webpack.NoErrorsPlugin()
   ],
