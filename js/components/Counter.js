@@ -1,7 +1,5 @@
 var React = require('react');
 
-var CounterActionCreators = require('../actions/Counters');
-
 var Counter = React.createClass({
 	render: function() {
 		var counter = this.props.counter;

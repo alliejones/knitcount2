@@ -15,5 +15,5 @@ module.exports = {
       new webpack.NoErrorsPlugin()
     ],
 
-    devtools: 'source-maps'
+    devtool: 'source-maps'
 };

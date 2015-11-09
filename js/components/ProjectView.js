@@ -1,27 +1,14 @@
-var Marty = require('marty');
-var React = require('react/addons');
-var Router = require('react-router');
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-var ProjectStore = require('../stores/Projects');
-var CounterStore = require('../stores/Counters');
-var CounterActions = require('../actions/Counters');
-
-var Link = Router.Link;
-var Counter = require('./Counter');
-
-var ProjectState = Marty.createStateMixin({
-	listenTo: [ ProjectStore, CounterStore ],
-	getState: function () {
-		var projectID = this.props.params.projectID;
-		return {
-			project: ProjectStore.getByID(projectID),
-			counters: CounterStore.getByProjectID(projectID)
-		};
-	}
-});
+import Counter from './counter';
 
 var ProjectView = React.createClass({
-	mixins: [ React.addons.LinkedStateMixin, ProjectState ],
+    displayName: 'ProjectView',
+
+	mixins: [ LinkedStateMixin ],
 
 	getInitialState: function() {
 		return {
@@ -34,11 +21,11 @@ var ProjectView = React.createClass({
 		return (
 			<div>
 				<Link to="/">back to project list</Link>
-				<h1>Project: {this.state.project.name}</h1>
+				<h1>Project: {this.props.project.name}</h1>
 				<div>
 					<ul>
-						{this.state.counters.map(function (c) {
-							return <Counter key={c.id} counter={c} />; 
+						{this.props.counters.map(function (c) {
+							return <Counter key={c.id} counter={c} />;
 						})}
 					</ul>
 					{this.renderCreateForm()}
@@ -69,10 +56,10 @@ var ProjectView = React.createClass({
 
 	createCounter: function(e) {
 		e.preventDefault();
-		CounterActions.createCounter({
-			name: this.state.counterName,
-			projectID: this.state.project.id
-		});
+		// CounterActions.createCounter({
+		// 	name: this.state.counterName,
+		// 	projectID: this.state.project.id
+		// });
 		this.setState({
 			counterName: null,
 			showCreateForm: false
@@ -88,4 +75,12 @@ var ProjectView = React.createClass({
 	}
 });
 
-module.exports = ProjectView;
+var mapStateToProps = function(state) {
+    var projectID = +state.router.params.id;
+    return {
+        project: state.projects.get(projectID),
+        counters: state.counters.filter(c => c.projectID === projectID)
+    };
+};
+
+module.exports = connect(mapStateToProps)(ProjectView);

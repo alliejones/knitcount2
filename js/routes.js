@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import ProjectList from './components/ProjectList';
+import ProjectView from './components/ProjectView';
 
 var App = React.createClass({
 	  render() {
@@ -16,6 +17,7 @@ var App = React.createClass({
 var routes = (
     <Route path="/" component={App}>
         <IndexRoute component={ProjectList} />
+        <Route path="/project/:id" component={ProjectView} />
     </Route>
 );
 

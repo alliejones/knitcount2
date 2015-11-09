@@ -1,15 +1,15 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-
-import { Project } from '../utl/records';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import { List } from 'immutable';
 
 var ProjectList = React.createClass({
+    displayName: 'ProjectList',
 
 	getInitialState: function() {
 		return {
-			  showCreateForm: false,
-        projects: new List()
+			  showCreateForm: false
 		};
 	},
 
@@ -17,7 +17,7 @@ var ProjectList = React.createClass({
 		return (
 			<div>
 				<h1>Projects</h1>
-				{this.state.projects.count() ?
+				{this.props.projects.count() ?
 					this.renderProjectList() : this.renderEmptyMessage()}
 				{this.renderCreateForm()}
 			</div>
@@ -31,13 +31,10 @@ var ProjectList = React.createClass({
 	renderProjectList: function() {
 		return (
 			<ul>
-				{this.state.projects.map(function(p) {
+				{this.props.projects.map(function(p) {
 					return (
 						<li key={p.id}>
-							<Link to="project"
-								params={{projectID: p.id }}>
-								{p.name}
-							</Link>
+                  <Link to={`/project/${p.id}`}>{p.name}</Link>
 						</li>
 					);
 				})}
@@ -63,6 +60,8 @@ var ProjectList = React.createClass({
 });
 
 var ProjectCreateForm = React.createClass({
+    displayName: 'ProjectCreateForm',
+
 	mixins: [ LinkedStateMixin ],
 
 	getInitialState: function() {
@@ -94,4 +93,4 @@ var ProjectCreateForm = React.createClass({
 	}
 });
 
-module.exports = ProjectList;
+module.exports = connect((state) => { return { projects: state.projects }; })(ProjectList);

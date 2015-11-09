@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, RouteHandler } from 'react-router';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import { store } from './store';
 import routes from './routes';
 
-console.log(store);
-
 var history = createBrowserHistory();
 
 var Root = React.createClass({
+  displayName: 'Root',
+
   render() {
     return (
       <div>
@@ -23,5 +23,6 @@ var Root = React.createClass({
     );
   }
 });
+
 
 ReactDOM.render(<Root/>, document.getElementById('react'));
