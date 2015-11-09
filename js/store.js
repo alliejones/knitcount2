@@ -6,8 +6,8 @@ import { routes } from './routes';
 import { reducer } from './reducers';
 
 var store = reduxReactRouter({
-    routes,
-    createHistory
+  routes,
+  createHistory
 })(createStore)(reducer);
 
 export { store };

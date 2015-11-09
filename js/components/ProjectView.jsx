@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 import Counter from './counter';
 
 var ProjectView = React.createClass({
-    displayName: 'ProjectView',
+  displayName: 'ProjectView',
 
 	mixins: [ LinkedStateMixin ],
 
@@ -62,16 +62,16 @@ var ProjectView = React.createClass({
 		  e.preventDefault();
 
       this.props.dispatch({
-          type: 'CREATE_COUNTER',
-          payload: {
-              projectID: +this.props.params.id,
-              name: this.state.counterName
-          }
+        type: 'CREATE_COUNTER',
+        payload: {
+          projectID: +this.props.params.id,
+          name: this.state.counterName
+        }
       });
 
       this.setState({
-          counterName: null,
-          showCreateForm: false
+        counterName: null,
+        showCreateForm: false
       });
 	},
 
@@ -85,28 +85,28 @@ var ProjectView = React.createClass({
 });
 
 var mapStateToProps = function(state) {
-    var projectID = +state.router.params.id;
-    return {
-        project: state.projects.get(projectID),
-        counters: state.counters.filter(c => c.projectID === projectID)
-    };
+  var projectID = +state.router.params.id;
+  return {
+    project: state.projects.get(projectID),
+    counters: state.counters.filter(c => c.projectID === projectID)
+  };
 };
 
 var mapDispatchToProps = function(dispatch) {
-    return bindActionCreators({
-        incCounter: function(counterID) {
-            return {
-                type: 'INC_COUNTER',
-                payload: { counterID }
-            };
-        },
-        decCounter: function(counterID) {
-            return {
-                type: 'DEC_COUNTER',
-                payload: { counterID }
-            };
-        }
-    }, dispatch);
+  return bindActionCreators({
+    incCounter: function(counterID) {
+      return {
+        type: 'INC_COUNTER',
+        payload: { counterID }
+      };
+    },
+    decCounter: function(counterID) {
+      return {
+        type: 'DEC_COUNTER',
+        payload: { counterID }
+      };
+    }
+  }, dispatch);
 };
 
 module.exports = connect(mapStateToProps, mapDispatchToProps)(ProjectView);

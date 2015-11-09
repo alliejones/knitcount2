@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { List } from 'immutable';
 
 var ProjectList = React.createClass({
-    displayName: 'ProjectList',
+  displayName: 'ProjectList',
 
 	getInitialState: function() {
 		return {
@@ -25,7 +25,7 @@ var ProjectList = React.createClass({
 	},
 
 	renderEmptyMessage: function() {
-		return <p>No projects yet!</p>;
+    return <p>No projects yet!</p>;
 	},
 
 	renderProjectList: function() {
@@ -34,7 +34,7 @@ var ProjectList = React.createClass({
 				{this.props.projects.map(function(p) {
 					return (
 						<li key={p.id}>
-                  <Link to={`/project/${p.id}`}>{p.name}</Link>
+              <Link to={`/project/${p.id}`}>{p.name}</Link>
 						</li>
 					);
 				})}
@@ -60,7 +60,7 @@ var ProjectList = React.createClass({
 });
 
 var ProjectCreateForm = React.createClass({
-    displayName: 'ProjectCreateForm',
+  displayName: 'ProjectCreateForm',
 
 	mixins: [ LinkedStateMixin ],
 
