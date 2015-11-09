@@ -1,5 +1,6 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
@@ -24,8 +25,11 @@ var ProjectView = React.createClass({
 				<h1>Project: {this.props.project.name}</h1>
 				<div>
 					<ul>
-						{this.props.counters.map(function (c) {
-							return <Counter key={c.id} counter={c} />;
+						{this.props.counters.map(c => {
+							  return <Counter key={c.id}
+                                counter={c}
+                                inc={this.props.incCounter}
+                                dec={this.props.decCounter} />;
 						})}
 					</ul>
 					{this.renderCreateForm()}
@@ -55,15 +59,20 @@ var ProjectView = React.createClass({
 	},
 
 	createCounter: function(e) {
-		e.preventDefault();
-		// CounterActions.createCounter({
-		// 	name: this.state.counterName,
-		// 	projectID: this.state.project.id
-		// });
-		this.setState({
-			counterName: null,
-			showCreateForm: false
-		});
+		  e.preventDefault();
+
+      this.props.dispatch({
+          type: 'CREATE_COUNTER',
+          payload: {
+              projectID: +this.props.params.id,
+              name: this.state.counterName
+          }
+      });
+
+      this.setState({
+          counterName: null,
+          showCreateForm: false
+      });
 	},
 
 	showCreateForm: function() {
@@ -83,4 +92,21 @@ var mapStateToProps = function(state) {
     };
 };
 
-module.exports = connect(mapStateToProps)(ProjectView);
+var mapDispatchToProps = function(dispatch) {
+    return bindActionCreators({
+        incCounter: function(counterID) {
+            return {
+                type: 'INC_COUNTER',
+                payload: { counterID }
+            };
+        },
+        decCounter: function(counterID) {
+            return {
+                type: 'DEC_COUNTER',
+                payload: { counterID }
+            };
+        }
+    }, dispatch);
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(ProjectView);

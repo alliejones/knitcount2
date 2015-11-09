@@ -55,6 +55,25 @@ var projects = function (state = initialProjects, action) {
 };
 
 var counters = function (state = initialCounters, action) {
+    switch (action.type) {
+    case 'INC_COUNTER':
+        state = state.updateIn([action.payload.counterID, 'value'], v => v + 1);
+        break;
+
+    case 'DEC_COUNTER':
+        state = state.updateIn([action.payload.counterID, 'value'], v => v - 1);
+        break;
+
+    case 'CREATE_COUNTER':
+        state = state.set(state.size, new Counter({
+            id: state.size,
+            projectID: action.payload.projectID,
+            name: action.payload.name,
+            value: 0
+        }));
+        break;
+    }
+
     return state;
 };
 

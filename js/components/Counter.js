@@ -13,15 +13,15 @@ var Counter = React.createClass({
 		);
 	},
 
-	inc: function(e) {
-		e.preventDefault();
-		CounterActionCreators.incCounter(this.props.counter.get('id'));
-	},
+	  inc: function(e) {
+        e.preventDefault();
+        this.props.inc(this.props.counter.id);
+    },
 
-	dec: function(e) {
-		e.preventDefault();
-		CounterActionCreators.decCounter(this.props.counter.get('id'));
-	}
+	  dec: function(e) {
+        e.preventDefault();
+		    this.props.dec(this.props.counter.id);
+	  }
 });
 
 module.exports = Counter;
