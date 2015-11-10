@@ -54,6 +54,10 @@ var initialCounters = Immutable.fromJS([
 var projects = function (state = initialProjects, action) {
   switch (action.type) {
   case 'CREATE_PROJECT':
+    state = state.set(state.size, new Project({
+      id: state.size,
+      name: action.payload.project.name
+    }));
     break;
   }
   return state;
@@ -72,8 +76,8 @@ var counters = function (state = initialCounters, action) {
   case 'CREATE_COUNTER':
     state = state.set(state.size, new Counter({
       id: state.size,
-      projectID: action.payload.projectID,
-      name: action.payload.name,
+      projectID: action.payload.counter.projectID,
+      name: action.payload.counter.name,
       value: 0
     }));
     break;

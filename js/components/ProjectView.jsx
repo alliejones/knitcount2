@@ -14,7 +14,8 @@ var ProjectView = React.createClass({
 	getInitialState: function() {
 		return {
 			showCreateForm: false,
-			counterName: null
+			counterName: null,
+      counterMaxValue: null
 		};
 	},
 
@@ -48,8 +49,8 @@ var ProjectView = React.createClass({
 				<h2>Add a new counter</h2>
 				<form onSubmit={this.createCounter}>
 					<label>
-						Name
-						<input type="text" valueLink={this.linkState('counterName')}/>
+						name
+						<input type="text" valuelink={this.linkstate('countername')}/>
 					</label>
 					<input type="submit"/>
 				</form>
@@ -61,12 +62,9 @@ var ProjectView = React.createClass({
 	createCounter: function(e) {
 		  e.preventDefault();
 
-      this.props.dispatch({
-        type: 'CREATE_COUNTER',
-        payload: {
-          projectID: +this.props.params.id,
-          name: this.state.counterName
-        }
+      this.props.createCounter({
+        projectID: +this.props.params.id,
+        name: this.state.counterName
       });
 
       this.setState({
@@ -94,6 +92,12 @@ var mapStateToProps = function(state) {
 
 var mapDispatchToProps = function(dispatch) {
   return bindActionCreators({
+    createCounter: function (counter) {
+      return {
+        type: 'CREATE_COUNTER',
+        payload: { counter }
+      };
+    },
     incCounter: function(counterID) {
       return {
         type: 'INC_COUNTER',

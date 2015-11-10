@@ -1,6 +1,7 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
 
@@ -29,22 +30,19 @@ var ProjectList = React.createClass({
 	},
 
 	renderProjectList: function() {
-		return (
-			<ul>
-				{this.props.projects.map(function(p) {
-					return (
-						<li key={p.id}>
-              <Link to={`/project/${p.id}`}>{p.name}</Link>
-						</li>
-					);
-				})}
-			</ul>
-		);
+    var projects = this.props.projects.map(function(p) {
+      return (
+        <li key={p.id}>
+          <Link to={`/project/${p.id}`}>{p.name}</Link>
+        </li>
+      );
+    });
+		return <ul>{projects}</ul>;
 	},
 
 	renderCreateForm: function() {
 		if (this.state.showCreateForm) {
-			return <ProjectCreateForm close={this.hideCreateForm} />;
+			return <ProjectCreateForm close={this.hideCreateForm} createProject={this.props.createProject}/>;
 		} else {
 			return <button onClick={this.showCreateForm}>New Project</button>;
 		}
@@ -88,9 +86,26 @@ var ProjectCreateForm = React.createClass({
 
 	handleSubmit: function(e) {
 		e.preventDefault();
-		ProjectActions.createProject({ name: this.state.projectName });
+    this.props.createProject({ name: this.state.projectName });
 		this.props.close();
 	}
 });
 
-module.exports = connect((state) => { return { projects: state.projects }; })(ProjectList);
+var mapStateToProps = function(state) {
+  return {
+    projects: state.projects
+  };
+};
+
+var mapDispatchToProps = function(dispatch) {
+  return bindActionCreators({
+    createProject: function(project) {
+      return {
+        type: 'CREATE_PROJECT',
+        payload: { project }
+      };
+    }
+  }, dispatch);
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(ProjectList);
