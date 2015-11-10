@@ -15,7 +15,8 @@ var ProjectView = React.createClass({
 		return {
 			showCreateForm: false,
 			counterName: null,
-      counterMaxValue: null
+      counterMaxValue: null,
+      createRolloverCounter: null
 		};
 	},
 
@@ -49,8 +50,16 @@ var ProjectView = React.createClass({
 				<h2>Add a new counter</h2>
 				<form onSubmit={this.createCounter}>
 					<label>
-						name
-						<input type="text" valuelink={this.linkstate('countername')}/>
+						Name
+						<input type="text" valueLink={this.linkState('counterName')}/>
+					</label>
+					<label>
+						Max value
+						<input type="number" valueLink={this.linkState('counterMaxValue')}/>
+					</label>
+					<label>
+						Count rollovers?
+						<input type="checkbox" valueLink={this.linkState('countRollovers')}/>
 					</label>
 					<input type="submit"/>
 				</form>
@@ -60,17 +69,21 @@ var ProjectView = React.createClass({
 	},
 
 	createCounter: function(e) {
-		  e.preventDefault();
+    e.preventDefault();
 
-      this.props.createCounter({
-        projectID: +this.props.params.id,
-        name: this.state.counterName
-      });
+    this.props.createCounter({
+      projectID: +this.props.params.id,
+      name: this.state.counterName,
+      maxValue: +this.state.counterMaxValue,
+      countRollovers: (this.state.countRollovers === 'on')
+    });
 
-      this.setState({
-        counterName: null,
-        showCreateForm: false
-      });
+    this.setState({
+      counterName: null,
+      showCreateForm: false,
+      maxValue: null,
+      countRollovers: false
+    });
 	},
 
 	showCreateForm: function() {

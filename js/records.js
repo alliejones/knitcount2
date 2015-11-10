@@ -10,7 +10,9 @@ var Counter = Record({
 	projectID: null,
 	name: null,
 	value: 0,
-	maxValue: null
+	maxValue: null,
+  countRollovers: false,
+  rolloverCount: null
 });
 
 export { Project, Counter };

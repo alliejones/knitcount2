@@ -64,9 +64,18 @@ var projects = function (state = initialProjects, action) {
 };
 
 var counters = function (state = initialCounters, action) {
+  var counter;
   switch (action.type) {
   case 'INC_COUNTER':
-    state = state.updateIn([action.payload.counterID, 'value'], v => v + 1);
+    counter = state.get(action.payload.counterID);
+    if (counter.value === counter.maxValue) {
+      state = state.set(counter.id, state.get(counter.id).merge({
+        value: 1,
+        rolloverCount: counter.rolloverCount + 1
+      }));
+    } else {
+      state = state.updateIn([counter.id, 'value'], v => v + 1);
+    }
     break;
 
   case 'DEC_COUNTER':
@@ -74,11 +83,15 @@ var counters = function (state = initialCounters, action) {
     break;
 
   case 'CREATE_COUNTER':
+    counter = action.payload.counter;
     state = state.set(state.size, new Counter({
       id: state.size,
-      projectID: action.payload.counter.projectID,
-      name: action.payload.counter.name,
-      value: 0
+      projectID: counter.projectID,
+      name: counter.name,
+      value: 0,
+      maxValue: counter.maxValue,
+      countRollovers: counter.countRollovers,
+      rolloverCount: counter.countRollovers ? 0 : null
     }));
     break;
   }
