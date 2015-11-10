@@ -79,7 +79,8 @@ var counters = function (state = initialCounters, action) {
     break;
 
   case 'DEC_COUNTER':
-    state = state.updateIn([action.payload.counterID, 'value'], v => v - 1);
+    if (state.getIn([action.payload.counterID, 'value']) > 0)
+      state = state.updateIn([action.payload.counterID, 'value'], v => v - 1);
     break;
 
   case 'CREATE_COUNTER':
