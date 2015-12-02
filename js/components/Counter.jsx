@@ -4,13 +4,19 @@ var Counter = React.createClass({
 	render() {
 		var counter = this.props.counter;
 		return (
-			<li key={counter.get('id')}>
-				{counter.get('name')}&nbsp;
-				<strong>{counter.get('value')}</strong>{counter.maxValue ? `/${counter.maxValue}` : ''}
-        {counter.countRollovers ? ` | ${counter.rolloverCount} times` : ''}&nbsp;
-				<a href="#" onClick={this.inc}>inc</a>&nbsp;
-				<a href="#" onClick={this.dec}>dec</a>
-			</li>
+      <div className={`${this.props.className} counter`}>
+        <div className="counter-name">
+          {counter.get('name')}
+        </div>
+        <div className="counter-value">
+          <strong>{counter.get('value')}</strong>{counter.maxValue ? `/${counter.maxValue}` : ''}
+          {counter.countRollovers ? ` | ${counter.rolloverCount} times` : ''}&nbsp;
+        </div>
+        <div className="counter-controls">
+          <button className="button button--small" onClick={this.inc}>inc</button>&nbsp;
+          <button className="button button--small" onClick={this.dec}>dec</button>
+        </div>
+      </div>
 		);
 	},
 

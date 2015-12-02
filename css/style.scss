@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "freight-sans-pro";
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list-item {
+  border: 1px solid #ddd;
+  display: block;
+  font-size: 1.4em;
+
+  &:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 0;
+  }
+
+}
+
+.list-itemWrap {
+  color: #333;
+  display: block;
+  height: 100%;
+  padding: 0.5em;
+  text-decoration: none;
+  width: 100%;
+}
+
+.button {
+  background: #eee;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+.button--small {
+  font-size: 0.7em;
+}
+
+label, input {
+  font-size: 1em;
+  padding: 0.5em;
+}
+
+.counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.counter-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.counter-value {
+  margin-left: auto;
+}
+
+.counter-controls {
+  white-space: nowrap;
+}

@@ -26,12 +26,15 @@ var ProjectView = React.createClass({
 				<Link to="/">back to project list</Link>
 				<h1>Project: {this.props.project.name}</h1>
 				<div>
-					<ul>
+          <ul className="list">
 						{this.props.counters.map(c => {
-							  return <Counter key={c.id}
-                                counter={c}
-                                inc={this.props.incCounter}
-                                dec={this.props.decCounter} />;
+               return <li className="list-item" key={c.id}>
+                 <Counter
+                   className="list-itemWrap"
+                   counter={c}
+                   inc={this.props.incCounter}
+                   dec={this.props.decCounter} />
+               </li>;
 						})}
 					</ul>
 					{this.renderCreateForm()}
@@ -42,28 +45,25 @@ var ProjectView = React.createClass({
 
 	renderCreateForm: function() {
 		if (!this.state.showCreateForm) {
-			return <button onClick={this.showCreateForm}>New counter</button>;
+      return <button className="button" onClick={this.showCreateForm}>New counter</button>;
 		}
 
 		return (
 			<div>
 				<h2>Add a new counter</h2>
 				<form onSubmit={this.createCounter}>
-					<label>
-						Name
-						<input type="text" valueLink={this.linkState('counterName')}/>
-					</label>
-					<label>
-						Max value
-						<input type="number" valueLink={this.linkState('counterMaxValue')}/>
-					</label>
-					<label>
-						Count rollovers?
-						<input type="checkbox" valueLink={this.linkState('countRollovers')}/>
-					</label>
-					<input type="submit"/>
+          <label for="counterName">Name</label>
+          <input name="counterName" type="text" valueLink={this.linkState('counterName')}/>
+
+          <label for="maxValue">Max value</label>
+          <input name="maxValue" type="number" valueLink={this.linkState('counterMaxValue')}/>
+
+          <label for="countRollovers">Count rollovers?</label>
+          <input name="countRollovers" type="checkbox" valueLink={this.linkState('countRollovers')}/>
+
+          <input type="submit" className="button" />
 				</form>
-				<button onClick={this.hideCreateForm}>Cancel</button>
+        <button className="button" onClick={this.hideCreateForm}>Cancel</button>
 			</div>
 		);
 	},

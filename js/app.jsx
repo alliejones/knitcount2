@@ -8,6 +8,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { store } from './store';
 import routes from './routes';
 
+import '../css/style.scss';
+
 var history = createBrowserHistory();
 
 var Root = React.createClass({

@@ -32,19 +32,19 @@ var ProjectList = React.createClass({
 	renderProjectList: function() {
     var projects = this.props.projects.map(function(p) {
       return (
-        <li key={p.id}>
-          <Link to={`/project/${p.id}`}>{p.name}</Link>
+        <li key={p.id} className="list-item">
+          <Link className="list-itemWrap" to={`/project/${p.id}`}>{p.name}</Link>
         </li>
       );
     });
-		return <ul>{projects}</ul>;
+    return <ul className="list">{projects}</ul>;
 	},
 
 	renderCreateForm: function() {
 		if (this.state.showCreateForm) {
 			return <ProjectCreateForm close={this.hideCreateForm} createProject={this.props.createProject}/>;
 		} else {
-			return <button onClick={this.showCreateForm}>New Project</button>;
+      return <button className="button" onClick={this.showCreateForm}>New Project</button>;
 		}
 	},
 
@@ -52,7 +52,8 @@ var ProjectList = React.createClass({
 		this.setState({ showCreateForm: true });
 	},
 
-	hideCreateForm: function() {
+  hideCreateForm: function(e) {
+    if (e) e.preventDefault();
 		this.setState({ showCreateForm: false });
 	}
 });
@@ -73,14 +74,12 @@ var ProjectCreateForm = React.createClass({
 			<div>
 				<h1>Create a New Project</h1>
 				<form onSubmit={this.handleSubmit}>
-					<label>
-						Name
-						<input type="text" valueLink={this.linkState('projectName')}/>
-					</label>
-					<input type="submit"/>
+          <label for="projectName">Name</label>
+          <input name="projectName" type="text" valueLink={this.linkState('projectName')}/>
+          <input type="submit" className="button" />
+          &nbsp;&nbsp;<button onClick={this.props.close} className="button">Cancel</button>
 				</form>
-				<button onClick={this.props.close}>Cancel</button>
-			</div>
+      </div>
 		);
 	},
 
